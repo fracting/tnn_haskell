@@ -37,8 +37,10 @@ sourceSentence = [11, 4, 2, 3, 1, 10]
 
 main :: IO ()
 main = do
-    print $ tnn baseConvCell sourceSentence
     print $ tnn compareAndSwap sourceSentence
+    print $ tnn baseConvCell sourceSentence
+    print $ tnn compareAndSwap $ tnn baseConvCell sourceSentence
 
+--- bubble sort: [11, 4, 2, 3, 1, 10] -> [1,2,3,4,10,11]
 --- base converstion (hex2dec): 0xb4231a(hex) == 11805466(dec)
---- bubble sort : [11, 4, 2, 3, 1, 10] -> [1,2,3,4,10,11]
+--- convert and sort: 0xb4231a -> 11805466 -> 01145668
