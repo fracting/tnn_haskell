@@ -17,7 +17,7 @@ baseConvCell (Just x, Nothing) = (Just a, Just b)
         (a, b) = divMod x 10
 baseConvCell (Just x, Just y) = (Just a, Just b)
     where
-        (a, b) = divMod (y*16 + x) 10
+        (a, b) = divMod (y*8 + x) 10
 
 scanLine :: TNNCell -> TargetWord -> SourceSentence -> (SourceSentence, TargetWord)
 scanLine tnnCell input_y [] = ([], input_y)
@@ -33,14 +33,16 @@ tnn tnnCell xs = case yn of
      where
          (output_xs, yn) = scanLine tnnCell Nothing xs
 
-sourceSentence = [11, 4, 2, 3, 1, 10]
+sourceSentence = [5,4,2,7,0,1]
+sourceSentence2 = [1,8,1,6,9,7]
 
 main :: IO ()
 main = do
-    print $ tnn compareAndSwap sourceSentence
+    print sourceSentence
     print $ tnn baseConvCell sourceSentence
+    print $ tnn compareAndSwap sourceSentence2
     print $ tnn compareAndSwap $ tnn baseConvCell sourceSentence
 
---- bubble sort: [11, 4, 2, 3, 1, 10] -> [1,2,3,4,10,11]
---- base converstion (hex2dec): 0xb4231a(hex) == 11805466(dec)
---- convert and sort: 0xb4231a -> 11805466 -> 01145668
+--- oct2dec: [5,4,2,7,0,1] -> [1,8,1,6,9,7]
+--- sort:    [1,8,1,6,9,7] -> [1,1,6,7,8,9]
+--- oct2dec . sort: [5,4,2,7,0,1] -> [1,8,1,6,9,7] -> [1,1,6,7,8,9]
